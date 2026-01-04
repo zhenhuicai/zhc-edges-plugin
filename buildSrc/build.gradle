@@ -1,0 +1,43 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+
+repositories {
+    gradlePluginPortal()
+    maven { url "https://maven.aliyun.com/repository/public" }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.assertj:assertj-core:3.23.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+
+    //We need the Object Mapper
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.datatype.jsr310)
+    implementation(libs.jackson.annotations)
+
+}
+
+gradlePlugin {
+    plugins {
+        optionalDependenciesPlugin {
+            id = "hope.optional"
+            implementationClass = "hope.tool.internal.OptionalDependenciesPlugin"
+        }
+        autoRouterPlugin {
+            id = "hope.router"
+            implementationClass = "hope.tool.internal.AutoRouterPlugin"
+        }
+        hopeRenamePlugin {
+            id = "hope.rename"
+            implementationClass = "hope.tool.internal.PackageRenamePackagePlugin"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

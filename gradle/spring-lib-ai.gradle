@@ -1,0 +1,9 @@
+apply from: "${rootProject.projectDir}/gradle/spring-lib.gradle"
+
+
+dependencies {
+    management platform(libs.spring.ai.bom)
+
+    //Other stuff
+    implementation(libs.spring.ai.starter.model.openai)
+}

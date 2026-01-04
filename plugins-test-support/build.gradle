@@ -1,0 +1,21 @@
+plugins{
+    id "java-library"
+    alias(libs.plugins.spring.dependency)
+}
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+apply from: "${rootProject.projectDir}/gradle/spring-lib.gradle"
+
+dependencies {
+    api(project(':plugins-api'))
+
+    implementation(libs.commons.lang3.versioned)
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'ch.qos.logback:logback-core'
+
+    compileOnly(libs.pf4j)
+    compileOnly(libs.junit.jupiter)
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

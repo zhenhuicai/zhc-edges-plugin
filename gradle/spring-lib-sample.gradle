@@ -1,0 +1,14 @@
+apply from: "${rootProject.projectDir}/gradle/spring-lib.gradle"
+description("My spring extend sample")
+dependencies {
+
+    implementation project(":xxx-common")
+
+    optional (libs.spring.context)
+    optional (libs.spring.web)
+
+    implementation(libs.bundles.jackson)
+    optional(libs.jakarta.persistence.api)
+    optional(libs.javax.servlet.api.versioned)
+
+}

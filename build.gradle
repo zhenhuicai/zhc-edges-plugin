@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.proguard)
+    }
+}
+
+plugins {
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.spotbugs)
+    alias(libs.plugins.sonarqube)
+    alias(libs.plugins.git.properties)
+    id ("hope.rename")
+}
+
+// Read version from libs.versions.toml and set as ext property
+ext {
+    springBootVersion = libs.versions.springBootVersion.get()
+    springDependencyVersion = libs.versions.springDependencyVersion.get()
+    springAiVersion = libs.versions.springAiVersion.get()
+    springCloudVersion = libs.versions.springCloudVersion.get()
+    apihugVersion = libs.versions.apihugVersion.get()
+}
+
+logger.quiet "Java version: ${System.properties['java.version']}"
+logger.quiet "Gradle version: $gradle.gradleVersion"
+logger.quiet "Current dir: $rootDir"
+logger.quiet "Spring Boot version: $springBootVersion"
+logger.quiet "Spring Dependency version: $springDependencyVersion"
+logger.quiet "Spring Ai version: $springAiVersion"
+logger.quiet "Spring Cloud version: $springCloudVersion"
+logger.quiet "ApiHug version: $apihugVersion"
+
+logger.quiet "All Modules: $subprojects"
+
+
+configure(subprojects) {
+
+    // Change this carefully
+    group = 'com.zhm.edges'
+    version = VERSION
+
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/libs-release" }
+        maven { url "https://repo.spring.io/milestone" }
+
+        //FIXME for aliyun speed up but sometime it may out of date
+        maven { url "https://maven.aliyun.com/repository/public" }
+    }
+}
+
+gitProperties {
+    failOnNoGitDirectory = false
+    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+}
+
+
+/**
+ * get the the nexus oss user name, if any passed from env
+ * @return
+ */
+def getRepositoryUsername() {
+    return System.getenv('NEXUS_OSS_USER_NAME') ?: NEXUS_OSS_USER_NAME
+}
+
+/**
+ * get the nexus user password, if any passed from env
+ * @return
+ */
+def getRepositoryPassword() {
+    return System.getenv('NEXUS_OSS_PASS_WORD') ?: NEXUS_OSS_PASS_WORD
+}

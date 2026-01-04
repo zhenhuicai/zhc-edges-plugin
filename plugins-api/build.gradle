@@ -1,0 +1,55 @@
+plugins{
+    id "java-library"
+    alias(libs.plugins.spring.dependency)
+
+}
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+apply from: "${rootProject.projectDir}/gradle/spring-lib.gradle"
+
+
+dependencies {
+    implementation(libs.pf4j)
+    implementation(libs.commons.lang3.versioned)
+
+    //Spring things
+    implementation platform(libs.spring.boot.dependencies)
+    implementation(libs.spring.core)
+    implementation(libs.spring.context)
+    implementation(libs.jakarta.annotation.api.versioned)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.annotations)
+
+    //This is plugin lib, the runtime context will supply the logger adapter
+    implementation (libs.slf4j.api.versioned)
+    implementation 'com.github.oshi:oshi-core:6.8.0'
+
+
+    implementation("com.microsoft.playwright:playwright:1.52.0") {
+        exclude group: 'com.microsoft.playwright', module: 'driver-bundle'
+    }
+    implementation 'ch.qos.logback:logback-classic' // or a compatible version
+    implementation 'ch.qos.logback:logback-core'
+
+    testImplementation(libs.awaitility)
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.mockito.core)
+
+    testImplementation(libs.junit.jupiter)
+    //For test only
+    testImplementation(libs.slf4j.simple.versioned)
+
+
+    // 核心响应式类型（Flux, Mono）
+    testImplementation "io.projectreactor:reactor-core:3.8.0-M1"
+
+    // 用于测试响应式流
+    testImplementation "io.projectreactor:reactor-test:3.8.0-M1"
+
+    // 可选：Reactor代码调试工具
+    // implementation "io.projectreactor:reactor-tools:3.8.0-M5"
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

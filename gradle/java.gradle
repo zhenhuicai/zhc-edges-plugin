@@ -1,0 +1,22 @@
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
+jar {
+    afterEvaluate {
+        manifest {
+            attributes["Implementation-Title"] = project.name
+            attributes["Implementation-Version"] = project.version
+            attributes["Automatic-Module-Name"] = project.name.replace('-', '.')  // for Jigsaw
+            attributes["Created-By"] = "${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
+            attributes["Created-At"] = new Date().format("yyyy-MM-dd HH:mm:ss z")
+        }
+    }
+}
