@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * @see PlaywrightDynamicDriver also check {@link
- *     Driver.PreinstalledDriver}
+ * @see PlaywrightDynamicDriver
  */
 @Service
 public class PlaywrightBootstrap {

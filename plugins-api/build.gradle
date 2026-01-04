@@ -1,7 +1,7 @@
 plugins{
     id "java-library"
     alias(libs.plugins.spring.dependency)
-
+    id "maven-publish"
 }
 apply from: "${rootProject.projectDir}/gradle/java.gradle"
 apply from: "${rootProject.projectDir}/gradle/spring-lib.gradle"

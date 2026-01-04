@@ -1,5 +1,6 @@
 apply plugin: "java-library"
 apply plugin: "hope.optional"
+apply plugin: "maven-publish"
 
 apply from: "${rootProject.projectDir}/gradle/java.gradle"
 

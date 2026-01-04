@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.git.properties)
     id ("hope.rename")
+    id "org.jreleaser" version "1.22.0"
 }
 
 // Read version from libs.versions.toml and set as ext property
@@ -72,4 +73,17 @@ def getRepositoryUsername() {
  */
 def getRepositoryPassword() {
     return System.getenv('NEXUS_OSS_PASS_WORD') ?: NEXUS_OSS_PASS_WORD
+}
+
+// JReleaser configuration is in .jreleaser/config.yml
+// This is a workaround for the 'owner' property conflict
+
+// Configure JReleaser version from Gradle property
+jreleaser {
+    project {
+        version = VERSION
+    }
+    
+    // Set environment variable for GitHub token
+    // This is handled via system property directly
 }
