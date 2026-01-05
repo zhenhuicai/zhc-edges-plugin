@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.git.properties)
     id ("hope.rename")
-    id "org.jreleaser" version "1.22.0"
+    alias(libs.plugins.jreleaser)
 }
 
 // Read version from libs.versions.toml and set as ext property
@@ -37,10 +37,9 @@ logger.quiet "ApiHug version: $apihugVersion"
 logger.quiet "All Modules: $subprojects"
 
 
-configure(subprojects) {
-
-    // Change this carefully
-    group = 'com.zhm.edges'
+// Change this carefully
+allprojects {
+    group = 'io.github.zhenhuicai'
     version = VERSION
 
     repositories {
@@ -77,13 +76,3 @@ def getRepositoryPassword() {
 
 // JReleaser configuration is in .jreleaser/config.yml
 // This is a workaround for the 'owner' property conflict
-
-// Configure JReleaser version from Gradle property
-jreleaser {
-    project {
-        version = VERSION
-    }
-    
-    // Set environment variable for GitHub token
-    // This is handled via system property directly
-}

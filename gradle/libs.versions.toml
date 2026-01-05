@@ -39,6 +39,7 @@ spotbugs = "5.0.13"
 sonarqube = "3.0"
 proguard="7.7.0"
 easyExcel = "4.0.3"
+jreleaser = "1.22.0"
 
 [libraries]
 
@@ -665,3 +666,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
 git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gitProperties" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }

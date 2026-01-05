@@ -37,6 +37,7 @@ out/
 ### VS Code ###
 .vscode/
 .trae/
+.jreleaser/
 
 ### ApiHug ###
 .apihug/.cache/.swagger
