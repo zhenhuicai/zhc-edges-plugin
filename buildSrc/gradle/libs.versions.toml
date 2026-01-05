@@ -1,5 +1,5 @@
 [versions]
-jacksonVersion = "2.15.2"
+jacksonVersion = "2.16.1"
 
 [libraries]
 

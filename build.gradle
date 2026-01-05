@@ -73,6 +73,3 @@ def getRepositoryUsername() {
 def getRepositoryPassword() {
     return System.getenv('NEXUS_OSS_PASS_WORD') ?: NEXUS_OSS_PASS_WORD
 }
-
-// JReleaser configuration is in .jreleaser/config.yml
-// This is a workaround for the 'owner' property conflict

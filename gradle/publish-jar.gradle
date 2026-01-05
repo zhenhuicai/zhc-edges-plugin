@@ -42,30 +42,20 @@ artifacts {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-
+        maven(MavenPublication) {
             artifactId = "${project.name}"
+
             from components.java
 
-            artifact sourcesJar
-            artifact javadocJar
-
             pom {
-                // POM_NAME
                 name = "${project.name}"
-                // POM_DESCRIPTION
                 description = "${project.description}"
                 url = GIT_URL
-
-                scm {
-                    connection = GIT_SCM_CONNECTION
-                    developerConnection = GIT_SCM_CONNECTION
-                    url = GIT_URL
-                }
+                inceptionYear = '2025'
                 licenses {
                     license {
-                        name = LICENSE_NAME
-                        url = LICENSE_URL
+                        name = 'Apache-2.0'
+                        url = 'https://spdx.org/licenses/Apache-2.0.html'
                     }
                 }
                 developers {
@@ -74,36 +64,28 @@ publishing {
                         email = DEVELOPER_EMAIL
                     }
                 }
-
-                withXml {
-                    def root = asNode()
-                    root.dependencies.'*'.findAll {
-                        def d = it
-                        d.scope.text() == 'runtime' && project.configurations
-                                .findByName("implementation").allDependencies.find { dep ->
-                            dep.name == it.artifactId.text()
-                        }.each() {
-                            d.scope*.value = 'compile'
-                            d.appendNode('optional', true)
-                        }
-                    }
+                scm {
+                    connection = GIT_SCM_CONNECTION
+                    developerConnection = GIT_SCM_CONNECTION
+                    url = GIT_URL
                 }
             }
         }
     }
+
+    repositories {
+        maven {
+            url = rootProject.layout.buildDirectory.dir('staging-deploy')
+        }
+    }
 }
 
+
 jreleaser {
-    project {
-        name = rootProject.name
-        version = rootProject.version
-        description = rootProject.description
-        group = 'io.github.zhenhuicai'
-        inceptionYear = '2024'
-        java {
-            groupId = 'io.github.zhenhuicai'
-            artifactId = project.name
-            version = rootProject.version
+    signing {
+        pgp {
+            active = 'ALWAYS'
+            armored = true
         }
     }
     deploy {
@@ -127,12 +109,6 @@ jreleaser {
                 }
             }
             */
-        }
-    }
-    signing {
-        pgp {
-            active = 'ALWAYS'
-            armored = true
         }
     }
 }
