@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.git.properties)
     id ("hope.rename")
-    alias(libs.plugins.jreleaser)
 }
 
 // Read version from libs.versions.toml and set as ext property
